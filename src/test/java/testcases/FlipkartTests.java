@@ -1,14 +1,13 @@
 package testcases;
 
 import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 import Pages.FlipkartHomePage;
 import Pages.ProductPage;
 import utilities.BaseTest;
-import utilities.Utilities;
+import utilities.Helper;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -20,11 +19,11 @@ public class FlipkartTests extends BaseTest {
     public void validateSortFunctionality() throws InterruptedException {
         FlipkartHomePage homePage = new FlipkartHomePage(driver);
         homePage.searchProduct(config.getProperty("searchTerm"));
-        Utilities.waitForPageLoad(driver);
+        Helper.waitForPageLoad(driver);
 
         homePage.applySortOption();
         Thread.sleep(3000);
-        Utilities.waitForPageLoad(driver);
+        Helper.waitForPageLoad(driver);
 
         List<Integer> allIntPrices = new ArrayList<>();
         int pageLimit = Integer.parseInt(config.getProperty("pageLimit"));
@@ -52,7 +51,7 @@ public class FlipkartTests extends BaseTest {
                     Thread.sleep(3000);
                     driver.navigate().refresh();
                     Thread.sleep(3000);
-                    Utilities.waitForPageLoad(driver);
+                    Helper.waitForPageLoad(driver);
                 } catch (Exception e) {
                     System.out.println("No more pages available.");
                     break;
@@ -69,37 +68,37 @@ public class FlipkartTests extends BaseTest {
     public void validateAddToCartFunctionality() throws InterruptedException {
         FlipkartHomePage homePage = new FlipkartHomePage(driver);
         homePage.searchProduct(config.getProperty("searchTerm"));
-        Utilities.waitForPageLoad(driver);
+        Helper.waitForPageLoad(driver);
 
         homePage.applySortOption();
         Thread.sleep(3000);
-        Utilities.waitForPageLoad(driver);
+        Helper.waitForPageLoad(driver);
 
         ProductPage productPage = new ProductPage(driver);
 
         List<WebElement> productElements = driver.findElements(By.xpath("//a[@target='_blank']//img"));
         for (int i = 0; i < 2; i++) {
-            Utilities.waitForElementLoad(driver, productElements.get(i));
+            Helper.waitForElementLoad(driver, productElements.get(i));
             productElements.get(i).click(); // Click the second product
-            Utilities.switchToNewWindow(driver);
-            Utilities.waitForPageLoad(driver);
+            Helper.switchToNewWindow(driver);
+            Helper.waitForPageLoad(driver);
 
             Thread.sleep(2000);
             productPage.getAddToCartButton().click();
 
             Thread.sleep(2000);
             driver.close();
-            Utilities.switchToParentWindow(driver);
+            Helper.switchToParentWindow(driver);
             Thread.sleep(3000);
         }
         Thread.sleep(3000);
         driver.navigate().refresh();
         Thread.sleep(3000);
 
-        Utilities.waitForElementToBeClickable(driver, productPage.cartIcon(), 10);
+        Helper.waitForElementToBeClickable(driver, productPage.cartIcon(), 10);
         productPage.cartIcon().click();
 
-        Utilities.waitForPageLoad(driver);
+        Helper.waitForPageLoad(driver);
         Thread.sleep(3000);
 
         driver.navigate().refresh();

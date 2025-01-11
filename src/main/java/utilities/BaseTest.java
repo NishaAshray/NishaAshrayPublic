@@ -28,7 +28,7 @@ public class BaseTest {
 
         // Close the login popup if it appears
         try {
-            Utilities.closeLoginPopup(driver);
+            Helper.closeLoginPopup(driver);
         } catch (Exception e) {
             System.out.println("Login popup did not appear.");
         }

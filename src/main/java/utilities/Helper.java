@@ -11,7 +11,9 @@ import java.time.Duration;
 import java.util.Iterator;
 import java.util.Set;
 
-public class Utilities {
+public class Helper {
+
+
 
     public static void closeLoginPopup(WebDriver driver) {
         WebElement closePopup = new WebDriverWait(driver, Duration.ofSeconds(10))
